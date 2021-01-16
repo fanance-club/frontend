@@ -29,6 +29,12 @@ class App extends Component {
 									);
 								}}
 							></Route>
+							<Route
+								path="/"
+								render={(props) => {
+									return <h1>Homepage, go to /trade/FC-MSD to start</h1>;
+								}}
+							></Route>
 						</Switch>
 					</section>
 				</Router>
