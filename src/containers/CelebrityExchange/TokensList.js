@@ -11,6 +11,8 @@ const { Panel } = Collapse;
 
 const TokensList = (props) => {
 	const [tokenDetails, setTokenDetails] = useState();
+	const [verticalKey, setVerticalKey] = useState();
+	const [categoryKey, setCategoryKey] = useState();
 	useEffect(() => {
 		let tokensList = props.tokensList;
 		tokensList.map((token, index, array) => {
@@ -18,6 +20,10 @@ const TokensList = (props) => {
 			array[index].playerName = details[2];
 			array[index].country = details[3];
 			array[index].DOB = details[4];
+			if (token.symbol === props.symbol) {
+				setVerticalKey(token.vertical);
+				setCategoryKey(token.category);
+			}
 			return true;
 		});
 		const nest = function (seq, keys) {
@@ -30,35 +36,40 @@ const TokensList = (props) => {
 		};
 		tokensList = nest(tokensList, ["vertical", "category"]);
 		setTokenDetails(tokensList);
-	}, [props.tokensList]);
+	}, [props.tokensList, props.symbol]);
+	const onPanelChange = (e) => {
+		setCategoryKey(e[1]);
+	};
 	return (
 		<div>
 			<Card className="tokensList" style={{ overflow: "auto" }}>
 				<Meta title="Celebrities" />
 				{typeof tokenDetails != "undefined" ? (
 					<Collapse
-						defaultActiveKey={["0"]}
+						activeKey={[verticalKey]}
 						ghost
 						className="site-collapse-custom-collapse"
+						onChange={onPanelChange}
 					>
 						{Object.keys(tokenDetails).map((vertical, i) => {
 							return (
 								<Panel
 									header={vertical}
-									key={i}
+									key={vertical}
 									className="site-collapse-custom-panel"
 								>
 									<Collapse
-										defaultActiveKey={["0"]}
+										activeKey={[categoryKey]}
 										ghost
 										className="site-collapse-custom-collapse"
+										onChange={onPanelChange}
 									>
 										{Object.keys(tokenDetails[vertical]).map((category, i) => {
 											let tokens = tokenDetails[vertical][category];
 											return (
 												<Panel
 													header={category}
-													key={i}
+													key={category}
 													className="site-collapse-custom-panel"
 												>
 													{tokens.map((token) => {

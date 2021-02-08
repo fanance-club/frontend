@@ -37,11 +37,13 @@ export default function BuyOrderBook(props) {
 									onClick={() => handleOrderClick(order, tempVolume)}
 								>
 									<td>
-										{typeof order != "undefined" ? tempVolume / 10 ** 18 : null}
+										{typeof order != "undefined"
+											? (tempVolume / 10 ** 18).toFixed(5)
+											: null}
 									</td>
 									<td style={{ color: "#55bd6c" }}>
 										{typeof order != "undefined"
-											? order.buyPrice / 10 ** 18
+											? (order.buyPrice / 10 ** 18).toFixed(5)
 											: null}
 									</td>
 								</tr>

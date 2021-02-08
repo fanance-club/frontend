@@ -38,11 +38,13 @@ export default function SellOrderBook(props) {
 								>
 									<td style={{ color: "#f1432f" }}>
 										{typeof order != "undefined"
-											? order.sellPrice / 10 ** 18
+											? (order.sellPrice / 10 ** 18).toFixed(5)
 											: null}
 									</td>
 									<td>
-										{typeof order != "undefined" ? tempVolume / 10 ** 18 : null}
+										{typeof order != "undefined"
+											? (tempVolume / 10 ** 18).toFixed(5)
+											: null}
 									</td>
 								</tr>
 							);

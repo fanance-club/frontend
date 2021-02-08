@@ -51,20 +51,22 @@ export default function Trades(props) {
 																typeof trade.price != "undefined" &&
 																typeof array[index + 1] != "undefined" &&
 																trade.price < array[index + 1].price
-																	? "#f1432f"
-																	: "#55bd6c",
+																	? "#55bd6c"
+																	: "#f1432f",
 														}}
 													>
 														{typeof trade.price != "undefined" &&
 														typeof array[index + 1] != "undefined" &&
 														trade.price < array[index + 1].price ? (
-															<span>&darr;</span>
-														) : (
 															<span>&uarr;</span>
+														) : (
+															<span>&darr;</span>
 														)}
-														{trade.price / 10 ** 18}
+														{(trade.price / 10 ** 18).toFixed(5)}
 													</td>
-													<td>{trade.numberOfTokens / 10 ** 18}</td>
+													<td>
+														{(trade.numberOfTokens / 10 ** 18).toFixed(5)}
+													</td>
 													<td>{moment(date).fromNow()}</td>
 												</tr>
 											) : null;

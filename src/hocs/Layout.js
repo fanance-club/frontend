@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Layout, Menu } from "antd";
+import { Layout, Menu, Image, BackTop } from "antd";
 import FetchContractData from "./FetchContractData";
 import { DrizzleContext } from "drizzle-react";
+import { HashRouter, Link } from "react-router-dom";
 const { Header, Content, Footer } = Layout;
 
 const HigherOrderComponent = (WrappedComponent) => {
@@ -72,16 +73,59 @@ const HigherOrderComponent = (WrappedComponent) => {
 											zIndex: 1,
 											width: "100%",
 											height: "50px",
+											backgroundColor: "#212121",
 										}}
 									>
 										<Menu
 											theme="dark"
 											mode="horizontal"
-											defaultSelectedKeys={["2"]}
+											defaultSelectedKeys={[""]}
+											style={{ backgroundColor: "#212121" }}
 										>
-											<Menu.Item key="1">nav 1</Menu.Item>
-											<Menu.Item key="2">nav 2</Menu.Item>
-											<Menu.Item key="3">nav 3</Menu.Item>
+											<HashRouter>
+												<Link to="/">
+													<img
+														src="/logo rect.png"
+														alt="Logo"
+														height="25px"
+													></img>
+												</Link>
+											</HashRouter>
+											<Menu.Item
+												key="2"
+												className="matic-widget-button"
+												data-default-page="home"
+												data-wapp-id="D9TcxvjMLp2gCJhKeMIv"
+												style={{ color: "white" }}
+											>
+												Wallet
+											</Menu.Item>
+											<Menu.Item key="3">
+												<HashRouter>
+													<Link to="/trade/FC-MSD" style={{ color: "white" }}>
+														Trade
+													</Link>
+												</HashRouter>
+											</Menu.Item>
+											<Menu.Item key="4" style={{ color: "white" }}>
+												Buy FANC Tokens
+											</Menu.Item>
+											<Menu.Item key="5" style={{ color: "white" }}>
+												Account
+											</Menu.Item>
+											<span
+												style={{
+													float: "right",
+													color: "#f6851b",
+												}}
+											>
+												<img
+													src="/Metamask.png"
+													alt="Metamask Logo"
+													height="30px"
+												></img>{" "}
+												Connect to Metamask
+											</span>
 										</Menu>
 									</Header>
 									<Content>
@@ -98,6 +142,7 @@ const HigherOrderComponent = (WrappedComponent) => {
 									</Content>
 									<Footer></Footer>
 								</Layout>
+								<BackTop />
 							</React.Fragment>
 						);
 					}}

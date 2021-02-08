@@ -66,7 +66,6 @@ export default function PlaceOrders(props) {
 
 		let FANCPrice =
 			(await oracleContractWeb3.methods.getAssetPrice().call()) / 10 ** 18;
-		console.log(FANCPrice);
 		// get the transaction states from the drizzle state
 		// let drizzle know we want to call the `set` method with `value`
 		// drizzle.web3.utils.toWei

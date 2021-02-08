@@ -1,20 +1,28 @@
 import React, { Component } from "react";
 import "./App.less";
 import CelebrityExchangeComponent from "./components/CelebrityExchangeComponent";
+import PlayersTable from "./components/PlayersTable";
 import HigherOrderComponent from "./hocs/Layout";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Helmet } from "react-helmet";
+import {
+	BrowserRouter as Router,
+	HashRouter,
+	Route,
+	Switch,
+} from "react-router-dom";
 
 class App extends Component {
 	render() {
 		return (
 			<React.Fragment>
-				<Router>
-					<section className="celebrityExchange">
-						<Switch>
-							<Route
-								path="/trade/:symbol"
-								render={(props) => {
-									return (
+				<HashRouter>
+					<Switch>
+						<Route
+							exact
+							path="/trade/:symbol"
+							render={(props) => {
+								return (
+									<section className="celebrityExchange">
 										<CelebrityExchangeComponent
 											{...props} // for match
 											drizzle={this.props.drizzle}
@@ -26,18 +34,36 @@ class App extends Component {
 											handleOrderClick={this.props.handleOrderClick}
 											clickedOrder={this.props.clickedOrder}
 										/>
-									);
-								}}
-							></Route>
-							<Route
-								path="/"
-								render={(props) => {
-									return <h1>Homepage, go to /trade/FC-MSD to start</h1>;
-								}}
-							></Route>
-						</Switch>
-					</section>
-				</Router>
+									</section>
+								);
+							}}
+						></Route>
+						<Route
+							path="/"
+							render={(props) => {
+								return (
+									<React.Fragment>
+										<h1>Header</h1>
+										<h1>APIs</h1>
+
+										<div style={{ display: "flex", justifyContent: "center" }}>
+											<PlayersTable
+												tokensList={this.props.tokensList}
+												drizzleState={this.props.drizzleState}
+											/>
+										</div>
+										<Helmet>
+											<script
+												src="https://wallet.matic.today/embeds/widget-button.js"
+												data-script-name="matic-embeds"
+											></script>
+										</Helmet>
+									</React.Fragment>
+								);
+							}}
+						></Route>
+					</Switch>
+				</HashRouter>
 			</React.Fragment>
 		);
 	}

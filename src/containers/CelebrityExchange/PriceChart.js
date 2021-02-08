@@ -18,8 +18,8 @@ const buildGraphData = (orders) => {
 		const group = orders[hour];
 		// Calculate price values - open, high, low, close
 		const open = group[0]; // first order
-		const high = maxBy(group, "price"); // high price
-		const low = minBy(group, "price"); // low price
+		const high = maxBy(group, "tokenPrice"); // high price
+		const low = minBy(group, "tokenPrice"); // low price
 		const close = group[group.length - 1]; // last order
 
 		return {
@@ -65,9 +65,9 @@ const priceChart = (orders, token) => {
 	[secondLastOrder, lastOrder] =
 		orders != null ? orders.slice(orders.length - 2, orders.length) : ["", ""];
 	// get last order price
-	const lastPrice = get(lastOrder, "price", 0);
+	const lastPrice = get(lastOrder, "tokenPrice", 0);
 	// get second last order price
-	const secondLastPrice = get(secondLastOrder, "price", 0);
+	const secondLastPrice = get(secondLastOrder, "tokenPrice", 0);
 
 	return {
 		lastPrice,
@@ -84,15 +84,11 @@ const priceSymbol = (lastPriceChange, lastPrice) => {
 	let output;
 	if (lastPriceChange === "+") {
 		output = (
-			<span style={{ color: "#55bd6c" }}>
-				&#9650; &nbsp; {lastPrice / 10 ** 18}
-			</span>
+			<span style={{ color: "#55bd6c" }}>&#9650; &nbsp; {lastPrice}</span>
 		); // Green up tiangle
 	} else {
 		output = (
-			<span style={{ color: "#f1432f" }}>
-				&#9660; &nbsp; {lastPrice / 10 ** 18}
-			</span>
+			<span style={{ color: "#f1432f" }}>&#9660; &nbsp; {lastPrice}</span>
 		); // Red down triangle
 	}
 	return output;

@@ -153,46 +153,100 @@ export default function UserOrders(props) {
 					</thead>
 					<tbody>
 						{openFocused && typeof allOpenOrders != "undefined"
-							? allOpenOrders.map((order) => {
-									return (
-										<tr key={order.timestamp}>
-											<td>
-												{typeof props.tokensList[0] != "undefined"
-													? props.tokensList.filter(
-															(token) => token.address == order.celebrityToken
-													  )[0].symbol
-													: null}
-											</td>
-											<td>{order.tokens}</td>
-											<td>{order.price}</td>
-											<td>
-												<Progress
-													type="circle"
-													percent={order.tokensLeft}
-													width={30}
-												/>
-											</td>
-										</tr>
-									);
-							  })
+							? allOpenOrders
+									.sort((order1, order2) => order2.timestamp - order1.timestamp)
+									.map((order) => {
+										return (
+											<tr
+												key={order.timestamp
+													.concat(order.id)
+													.concat(order.celebrityToken)}
+											>
+												<td>
+													{order.tokensLeftToBuy >= 0 ? (
+														<p
+															style={{
+																color: "#55bd6c",
+																fontSize: "12px",
+																margin: "0px",
+															}}
+														>
+															BUY
+														</p>
+													) : (
+														<p
+															style={{
+																color: "#f1432f",
+																fontSize: "12px",
+																margin: "0px",
+															}}
+														>
+															SELL
+														</p>
+													)}
+													{typeof props.tokensList[0] != "undefined"
+														? props.tokensList.filter(
+																(token) => token.address == order.celebrityToken
+														  )[0].symbol
+														: null}
+												</td>
+												<td>{order.tokens.toFixed(5)}</td>
+												<td>{order.price.toFixed(5)}</td>
+												<td>
+													<Progress
+														type="circle"
+														percent={order.tokensLeft.toFixed(0)}
+														width={30}
+													/>
+												</td>
+											</tr>
+										);
+									})
 							: null}
 						{!openFocused && typeof allHistoryOrders != "undefined"
-							? allHistoryOrders.map((order) => {
-									return (
-										<tr key={order.timestamp}>
-											<td>
-												{typeof props.tokensList[0] != "undefined"
-													? props.tokensList.filter(
-															(token) => token.address == order.celebrityToken
-													  )[0].symbol
-													: null}
-											</td>
-											<td>{order.tokens}</td>
-											<td>{order.price}</td>
-											<td>{order.status == "2" ? "Filled" : "Cancelled"}</td>
-										</tr>
-									);
-							  })
+							? allHistoryOrders
+									.sort((order1, order2) => order2.timestamp - order1.timestamp)
+									.map((order) => {
+										return (
+											<tr
+												key={order.timestamp
+													.concat(order.id)
+													.concat(order.celebrityToken)}
+											>
+												<td>
+													{order.tokensLeftToBuy >= 0 ? (
+														<p
+															style={{
+																color: "#55bd6c",
+																fontSize: "12px",
+																margin: "0px",
+															}}
+														>
+															BUY
+														</p>
+													) : (
+														<p
+															style={{
+																color: "#f1432f",
+																fontSize: "12px",
+																margin: "0px",
+															}}
+														>
+															SELL
+														</p>
+													)}
+													{typeof props.tokensList[0] != "undefined"
+														? props.tokensList.filter(
+																(token) => token.address == order.celebrityToken
+														  )[0].symbol
+														: null}
+												</td>
+												<td>{order.tokens.toFixed(5)}</td>
+												<td>{order.price.toFixed(5)}</td>
+												<td>{order.status == "2" ? "Filled" : "Cancelled"}</td>
+											</tr>
+										);
+									})
 							: null}
 					</tbody>
 				</table>
